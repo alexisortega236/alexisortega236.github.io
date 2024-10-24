@@ -36,7 +36,7 @@ module.exports = {
           7: "#D1D5DB",
           8: "#E5E7EB",
         },
-        primary: "#0000000",
+        primary: "#3758F9",
         "blue-dark": "#1B44C8",
         secondary: "#13C296",
         "body-color": "#637381",
