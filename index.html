@@ -5195,7 +5195,7 @@
               >
                 Escribe un Mensaje
               </h3>
-              <form id="contactForm">
+              <form action="https://formsubmit.co/alexisortega236@gmail.com" method="POST">
                 <div class="mb-[22px]">
                   <label
                     for="fullName"class="mb-4 block text-sm text-body-color dark:text-dark-6">Nombre Completo*</label>
@@ -5215,8 +5215,10 @@
                 </div>            <div id="formMessage" class="mb-4 text-sm hidden"></div>
                 <div class="mb-0">
                   <button type="submit" class="inline-flex items-center justify-center rounded-md bg-primary px-10 py-3 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-blue-dark">Enviar</button>
+                  <input type="hidden" name="_next" value="127.0.0.1:5500">
+                  <input type="hidden" name="_captcha" value="false">
                 </div>
-                <p id="formResponse" class="mt-4 text-sm"></p> <!-- Para mostrar mensajes de respuesta -->
+                
               </form>
             </div>
           </div>
