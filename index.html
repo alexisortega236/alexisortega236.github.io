@@ -5195,67 +5195,28 @@
               >
                 Escribe un Mensaje
               </h3>
-              <form>
+              <form id="contactForm">
                 <div class="mb-[22px]">
                   <label
-                    for="fullName"
-                    class="mb-4 block text-sm text-body-color dark:text-dark-6"
-                    >Nombre Completo*</label
-                  >
-                  <input
-                    type="text"
-                    name="fullName"
-                    placeholder="Alexis Ortega"
-                    class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"
-                  />
+                    for="fullName"class="mb-4 block text-sm text-body-color dark:text-dark-6">Nombre Completo*</label>
+                  <input type="text" name="fullName" id="fullName" placeholder="Alexis Ortega" class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6" required/>
                 </div>
                 <div class="mb-[22px]">
-                  <label
-                    for="email"
-                    class="mb-4 block text-sm text-body-color dark:text-dark-6"
-                    >Email*</label
-                  >
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="ejemplo@tucorreo.com"
-                    class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"
-                  />
+                  <label for="email" class="mb-4 block text-sm text-body-color dark:text-dark-6">Email*</label>
+                  <input type="email" name="email" id="email" placeholder="ejemplo@tucorreo.com" required class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6" />
                 </div>
                 <div class="mb-[22px]">
-                  <label
-                    for="phone"
-                    class="mb-4 block text-sm text-body-color dark:text-dark-6"
-                    >Teléfono*</label
-                  >
-                  <input
-                    type="text"
-                    name="phone"
-                    placeholder="+55 777236632"
-                    class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"
-                  />
+                  <label for="phone" class="mb-4 block text-sm text-body-color dark:text-dark-6">Teléfono*</label>
+                  <input type="text" name="phone" id="phone" placeholder="+55 777236632" required class="w-full border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"/>
                 </div>
                 <div class="mb-[30px]">
-                  <label
-                    for="message"
-                    class="mb-4 block text-sm text-body-color dark:text-dark-6"
-                    >Mensaje*</label
-                  >
-                  <textarea
-                    name="message"
-                    rows="1"
-                    placeholder="Escribe tú Mensaje Aquí"
-                    class="w-full resize-none border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"
-                  ></textarea>
-                </div>
+                  <label for="message" class="mb-4 block text-sm text-body-color dark:text-dark-6">Mensaje*</label>
+                  <textarea name="message" rows="1" id="message" placeholder="Escribe tú Mensaje Aquí" required class="w-full resize-none border-0 border-b border-[#f1f1f1] bg-transparent pb-3 text-body-color placeholder:text-body-color/60 focus:border-primary focus:outline-none dark:border-dark-3 dark:text-dark-6"></textarea>
+                </div>            <div id="formMessage" class="mb-4 text-sm hidden"></div>
                 <div class="mb-0">
-                  <button
-                    type="submit"
-                    class="inline-flex items-center justify-center rounded-md bg-primary px-10 py-3 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-blue-dark"
-                  >
-                    Enviar
-                  </button>
+                  <button type="submit" class="inline-flex items-center justify-center rounded-md bg-primary px-10 py-3 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-blue-dark">Enviar</button>
                 </div>
+                <p id="formResponse" class="mt-4 text-sm"></p> <!-- Para mostrar mensajes de respuesta -->
               </form>
             </div>
           </div>
@@ -6000,6 +5961,36 @@
           },
         },
       });
+    </script>
+    <script>
+      document.getElementById('contactForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Evita la recarga de la página.
+  
+    const form = e.target;
+    const formData = new FormData(form);
+  
+    try {
+      const response = await fetch('send_mail.php', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      const result = await response.json();
+      const messageElement = document.getElementById('formResponse');
+      if (result.success) {
+        messageElement.textContent = result.message;
+        messageElement.style.color = 'green';
+        form.reset(); // Limpia el formulario.
+      } else {
+        messageElement.textContent = result.message;
+        messageElement.style.color = 'red';
+      }
+    } catch (error) {
+      document.getElementById('formResponse').textContent = 'Error al enviar el formulario.';
+      document.getElementById('formResponse').style.color = 'red';
+    }
+  });
+  
     </script>
   </body>
 </html>
