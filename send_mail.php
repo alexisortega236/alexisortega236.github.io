@@ -1,22 +1,42 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = htmlspecialchars($_POST['fullName']);
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $telefono = htmlspecialchars($_POST['phone']);
-    $mensaje = htmlspecialchars($_POST['message']);
+    // Datos del formulario
+    $name = $_POST['fullName'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $message = $_POST['message'];
 
-    $to = "alexisortega236@gmail.com"; // Cambiar por tu correo.
+    // Datos del correo
+    $to = "alexisortega236@gmail.com";
     $subject = "Nuevo mensaje de contacto";
-    $body = "Nombre: $nombre\nCorreo: $email\nTeléfono: $telefono\nMensaje:\n$mensaje";
-    $headers = "From: $email\r\n";
-    $headers .= "Reply-To: $email\r\n";
+    $body = "
+    <html>
+    <head>
+        <title>Nuevo Mensaje de Contacto</title>
+    </head>
+    <body>
+        <h2>Detalles del mensaje:</h2>
+        <p><strong>Nombre Completo:</strong> $name</p>
+        <p><strong>Email:</strong> $email</p>
+        <p><strong>Teléfono:</strong> $phone</p>
+        <p><strong>Mensaje:</strong></p>
+        <p>$message</p>
+    </body>
+    </html>
+    ";
 
+    // Encabezados del correo
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: <$email>" . "\r\n";
+
+    // Intentar enviar el correo
     if (mail($to, $subject, $body, $headers)) {
-        echo json_encode(["success" => true, "message" => "Correo enviado correctamente."]);
+        echo "<p>Mensaje enviado con éxito.</p>";
     } else {
-        echo json_encode(["success" => false, "message" => "Hubo un error al enviar el correo."]);
+        echo "<p>Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.</p>";
     }
 } else {
-    http_response_code(405); // Método no permitido.
+    echo "<p>Acceso no autorizado.</p>";
 }
 ?>

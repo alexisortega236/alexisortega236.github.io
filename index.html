@@ -1957,7 +1957,7 @@
                   >
                     Escribe un Mensaje
                   </h3>
-                  <form action="https://formsubmit.co/alexisortega236@gmail.com" method="POST">
+                  <form action="send_mail.php" method="post" id="contactForm">
                     <div class="mb-[22px]">
                       <label
                         for="fullName"class="mb-4 block text-md text-body-color dark:text-dark-6">Nombre Completo*</label>
@@ -5989,35 +5989,21 @@
         },
       });
     </script>
-    <script>
-      document.getElementById('contactForm').addEventListener('submit', async function (e) {
-    e.preventDefault(); // Evita la recarga de la página.
-  
-    const form = e.target;
-    const formData = new FormData(form);
-  
-    try {
-      const response = await fetch('send_mail.php', {
-        method: 'POST',
+    <!-- <script>document.querySelector("form").onsubmit = function(e) {
+      e.preventDefault();
+      let formData = new FormData(this);
+    
+      fetch("send_email.php", {
+        method: "POST",
         body: formData,
-      });
-  
-      const result = await response.json();
-      const messageElement = document.getElementById('formResponse');
-      if (result.success) {
-        messageElement.textContent = result.message;
-        messageElement.style.color = 'green';
-        form.reset(); // Limpia el formulario.
-      } else {
-        messageElement.textContent = result.message;
-        messageElement.style.color = 'red';
-      }
-    } catch (error) {
-      document.getElementById('formResponse').textContent = 'Error al enviar el formulario.';
-      document.getElementById('formResponse').style.color = 'red';
-    }
-  });
-  
-    </script>
+      })
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("formMessage").innerHTML = html;
+          document.getElementById("formMessage").style.display = "block";
+        })
+        .catch((error) => console.error("Error:", error));
+    };
+    </script> -->
   </body>
 </html>
