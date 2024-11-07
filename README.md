@@ -26,3 +26,4 @@ and sharing with friends. Also open an issue if you find bug or feel free to con
 - Dark mode support
 - Code and performance optimization
 - Updated dependencies
+# intercom
