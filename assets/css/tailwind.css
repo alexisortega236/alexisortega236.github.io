@@ -1399,7 +1399,8 @@ body {
 
 .bg-primary{
   --tw-bg-opacity: 1;
-  background-color: rgb(55 88 249 / var(--tw-bg-opacity));
+  /* background-color: rgb(55 88 249 / var(--tw-bg-opacity)); */
+  background-color: rgb(33 71 87/ var(--tw-bg-opacity));
 }
 
 .bg-primary\/5{
@@ -1412,7 +1413,7 @@ body {
 
 .bg-secondary{
   --tw-bg-opacity: 1;
-  background-color: rgb(19 194 150 / var(--tw-bg-opacity));
+  background-color: rgb(33 71 87/ var(--tw-bg-opacity));
 }
 
 .bg-stroke{
@@ -2186,9 +2187,9 @@ body {
   border-color: rgb(55 88 249 / var(--tw-border-opacity));
 }
 
-.hover\:bg-\[\#0BB489\]:hover{
+.hover\:bg-\[\#737171\]:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(11 180 137 / var(--tw-bg-opacity));
+  background-color: rgb(115 136 145 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-dark:hover{
