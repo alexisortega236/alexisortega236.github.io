@@ -6000,7 +6000,44 @@
       });
     </script>
     <script>
-      
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formMessage = document.getElementById('formMessage');
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    
+    // Mostrar estado de carga
+    submitButton.innerHTML = 'Enviando...';
+    submitButton.disabled = true;
+    
+    fetch('send_mail.php', {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(response => response.json())
+    .then(data => {
+        formMessage.classList.remove('hidden');
+        formMessage.style.color = data.success ? 'green' : 'red';
+        formMessage.textContent = data.message;
+        
+        if (data.success) {
+            // Limpiar el formulario si el envío fue exitoso
+            this.reset();
+        }
+    })
+    .catch(error => {
+        formMessage.classList.remove('hidden');
+        formMessage.style.color = 'red';
+        formMessage.textContent = 'Error al enviar el mensaje. Por favor, inténtelo más tarde.';
+    })
+    .finally(() => {
+        // Restaurar el botón
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+    });
+});
+
     </script>
     <!-- <script>document.querySelector("form").onsubmit = function(e) {
       e.preventDefault();
