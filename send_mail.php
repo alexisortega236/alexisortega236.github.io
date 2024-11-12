@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $headers = array(
         'MIME-Version: 1.0',
         'Content-type: text/html; charset=UTF-8',
-        'From: ' . $email,
+        'From: alexisortega236@gmail.com',
         'Reply-To: ' . $email,
         'X-Mailer: PHP/' . phpversion()
     );
