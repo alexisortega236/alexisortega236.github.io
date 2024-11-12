@@ -6017,7 +6017,7 @@
     })
     .then(response => response.json())
     .then(data => {
-        formMessage.classList.remove('hidden');
+        formMessage.classList.remove('hidden'); 
         formMessage.style.color = data.success ? 'green' : 'red';
         formMessage.textContent = data.message;
         
