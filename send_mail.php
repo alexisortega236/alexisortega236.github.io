@@ -1,6 +1,5 @@
 <?php
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
+// Import PHPMailer classes into the global namespace
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -9,41 +8,55 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-//Load Composer's autoloader
+// Load Composer's autoloader
 require 'vendor/autoload.php';
 
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get the recipient's email from the form
+    $destinatario = $_POST['email'];
 
-try {
-    //Server settings
-    $mail->SMTPDebug = 2;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.titan.email';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'contaco@legalrentmx.com';                     //SMTP username
-    $mail->Password   = 'ma.i1LAWs(';                               //SMTP password
-    $mail->SMTPSecure = 'tsl';            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    // Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
 
-    //Recipients
-    $mail->setFrom('contaco@legalrentmx.com', 'Legalrent');
-    $mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
-    $mail->addAddress('ellen@example.com');               //Name is optional
-    $mail->addBCC('alexisortega236@gmail.com');
+    try {
+        // Server settings
+        $mail->SMTPDebug = 0;                      // Disable debug output for production
+        $mail->isSMTP();                           // Send using SMTP
+        $mail->Host       = 'smtp.titan.email';    // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                  // Enable SMTP authentication
+        $mail->Username   = 'contaco@legalrentmx.com';  // SMTP username
+        $mail->Password   = 'ma.i1LAWs(';          // SMTP password
+        $mail->SMTPSecure = 'tls';                 // Enable TLS encryption
+        $mail->Port       = 587;                   // Use port 587 with TLS
 
-    //Attachments
-    $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+        // Recipients
+        $mail->setFrom('contaco@legalrentmx.com', 'Legalrent');
+        
+        // Use the dynamic email address
+        if (!empty($destinatario)) {
+            $mail->addAddress($destinatario);  // Use the variable for the recipient's email
+        } else {
+            throw new Exception('No se proporcionó un correo electrónico válido.');
+        }
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Test';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->addBCC('alexisortega236@gmail.com'); // Opcional: agrega un BCC para copias ocultas
 
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // Attachments (if necessary)
+        // $mail->addAttachment('/var/tmp/file.tar.gz'); // Add attachments
+        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg'); // Optional name
+
+        // Content
+        $mail->isHTML(true);                                    // Set email format to HTML
+        $mail->Subject = 'Test';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+        echo 'El mensaje ha sido enviado';
+    } catch (Exception $e) {
+        echo "El mensaje no se pudo enviar. Error: {$mail->ErrorInfo}";
+    }
+} else {
+    echo "No se recibieron datos del formulario.";
 }
