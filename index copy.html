@@ -99,7 +99,7 @@
                   </li>
                   <li class="group relative">
                     <a
-                      href="investigacion.html"
+                      href="#team"
                       class="ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-7 lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 lg:text-white lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-10"
                     >
                       Investigación
@@ -5933,27 +5933,17 @@
     <script src="assets/js/main.js"></script>
     <script>
       // ==== for menu scroll
-      const href = elem.getAttribute("href");
+      const pageLink = document.querySelectorAll(".ud-menu-scroll");
 
-if (href && href.startsWith('#')) {
-  const targetElement = document.querySelector(href);
-  
-  if (targetElement) {
-    const topOffset = 60; // Ajuste de desplazamiento
-    const elementPosition = targetElement.getBoundingClientRect().top;
-    const offsetPosition = elementPosition - topOffset;
-
-    window.scrollTo({
-      top: offsetPosition + window.pageYOffset,
-      behavior: "smooth",
-    });
-  } else {
-    console.warn('El elemento objetivo no se encontró en el DOM');
-  }
-} else {
-  console.warn('El href no es un ID válido para scrollIntoView');
-}
-
+      pageLink.forEach((elem) => {
+        elem.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.querySelector(elem.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+            offsetTop: 1 - 60,
+          });
+        });
+      });
 
       // section menu active
       function onScroll(event) {
