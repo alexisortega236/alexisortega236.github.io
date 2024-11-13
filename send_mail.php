@@ -4,9 +4,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
 // Load Composer's autoloader
 require 'vendor/autoload.php';
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($destinatario)) {
             $mail->addAddress($destinatario);  // Use the variable for the recipient's email
         } else {
-            throw new Exception('No se proporcionó un correo electrónico válido.');
+            throw new Exception('No se proporcion贸 un correo electr贸nico v谩lido.');
         }
 
         $mail->addBCC('alexisortega236@gmail.com'); // Opcional: agrega un BCC para copias ocultas
