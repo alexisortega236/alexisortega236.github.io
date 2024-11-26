@@ -28,19 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isSMTP();                           // Send using SMTP
         $mail->Host       = 'smtp.titan.email';    // Set the SMTP server to send through
         $mail->SMTPAuth   = true;                  // Enable SMTP authentication
-        $mail->Username   = 'contaco@legalrentmx.com';  // SMTP username
+        $mail->Username   = 'contaco@juridicasa.com';  // SMTP username
         $mail->Password   = 'ma.i1LAWs(';          // SMTP password
         $mail->SMTPSecure = 'tls';                 // Enable TLS encryption
         $mail->Port       = 587;                   // Use port 587 with TLS
 
         // Recipients
-        $mail->setFrom('contaco@legalrentmx.com', 'Legalrent');
+        $mail->setFrom('contaco@juridicasa.com', 'JuridiCasa');
         $mail->addAddress($email, $fullName);      // Use the email and name from the form
-        $mail->addBCC('legalrentmx.com@gmail.com');  // Blind carbon copy to the admin email
+        $mail->addBCC('JuridiCasamx.com@gmail.com');  // Blind carbon copy to the admin email
 
         // Content
         $mail->isHTML(true);                                    // Set email format to HTML
-        $mail->Subject = 'Gracias por contactarnos - Legalrent';
+        $mail->Subject = 'Gracias por contactarnos - JuridiCasa';
 
         // HTML Content
         $mail->Body = '
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </tr>
             <tr>
                 <td class="footer" style="background-color: #050707; color: white; text-align: center; padding: 10px; font-size: 12px;">
-                    &copy; ' . date('Y') . ' Legalrent. Todos los derechos reservados.
+                    &copy; ' . date('Y') . ' JuridiCasa. Todos los derechos reservados.
                 </td>
             </tr>
         </table>
