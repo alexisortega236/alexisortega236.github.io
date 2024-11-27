@@ -29,4 +29,4 @@ Más allá del código, me motiva la oportunidad de:
 - Colaborar con equipos creativos
 - Generar un impacto positivo a través de la tecnología
 
-*"La innovación tecnológica no se trata solo de crear algo nuevo, sino de reimaginar lo posible."*
+*"La innovación tecnológica no se trata solo de crear algo nuevo, sino de reimaginar lo posible."* 
