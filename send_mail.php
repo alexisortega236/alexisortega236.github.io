@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Recipients
         $mail->setFrom('contaco@juridicasa.com', 'JuridiCasa');
         $mail->addAddress($email, $fullName);      // Use the email and name from the form
-        $mail->addBCC('JuridiCasamx.com@gmail.com');  // Blind carbon copy to the admin email
+        $mail->addBCC('legalrentmx.com@gmail.com');  // Blind carbon copy to the admin email
 
         // Content
         $mail->isHTML(true);                                    // Set email format to HTML
