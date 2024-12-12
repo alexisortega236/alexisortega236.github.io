@@ -1179,6 +1179,10 @@ body {
   max-width: 710px;
 }
 
+.max-w-\[770px\]{
+  max-width: 770px;
+}
+
 .-translate-y-1\/2{
   --tw-translate-y: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -2996,6 +3000,16 @@ body {
   .lg\:py-\[90px\]{
     padding-top: 90px;
     padding-bottom: 90px;
+  }
+
+  .lg\:py-\[415px\]{
+    padding-top: 415px;
+    padding-bottom: 415px;
+  }
+
+  .lg\:py-\[715px\]{
+    padding-top: 715px;
+    padding-bottom: 715px;
   }
 
   .lg\:pb-20{
