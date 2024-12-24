@@ -59,6 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        <p><strong>Mensaje:</strong><br>{$message}</p>";
         $mail->AltBody = "Nuevo mensaje recibido\n\nNombre: {$fullName}\nEmail: {$email}\nTeléfono: {$phone}\nMensaje: {$message}";
 
+        // Configuración de codificación UTF-8
+        $mail->CharSet = 'UTF-8'; // Codificación de caracteres
+        $mail->Encoding = 'base64'; // Opcional: Mejor manejo de caracteres extendidos
+
         // Enviar correo al administrador
         $mail->send();
 
