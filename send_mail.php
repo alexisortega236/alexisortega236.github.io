@@ -1,87 +1,102 @@
 <?php
-// Import PHPMailer classes into the global namespace
+header('Content-Type: application/json'); // Especifica que la respuesta será JSON
+
+require 'libs/PHPMailer/PHPMailer.php';
+require 'libs/PHPMailer/SMTP.php';
+require 'libs/PHPMailer/Exception.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/phpmailer/phpmailer/src/Exception.php';
-require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+// Respuesta inicial
+$response = ['success' => false, 'message' => ''];
 
-// Load Composer's autoloader
-require 'vendor/autoload.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Capturar y sanitizar datos del formulario
+    $fullName = htmlspecialchars(trim($_POST['fullName']));
+    $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
+    $phone = htmlspecialchars(trim($_POST['phone']));
+    $message = htmlspecialchars(trim($_POST['message']));
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the form data
-    $fullName = $_POST['fullName'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $message = $_POST['message'];
+    // Validar campos
+    if (!$email) {
+        $response['message'] = 'El correo electrónico ingresado no es válido.';
+        echo json_encode($response);
+        exit;
+    }
 
-    // Create an instance; passing `true` enables exceptions
+    if (empty($fullName) || empty($phone) || empty($message)) {
+        $response['message'] = 'Todos los campos son obligatorios.';
+        echo json_encode($response);
+        exit;
+    }
+
+    // Crear instancia de PHPMailer
     $mail = new PHPMailer(true);
 
     try {
-        // Server settings
-        $mail->SMTPDebug = 0;                      // Disable debug output for production
-        $mail->isSMTP();                           // Send using SMTP
-        $mail->Host       = 'smtp.titan.email';    // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                  // Enable SMTP authentication
-        $mail->Username   = 'contaco@juridicasa.com';  // SMTP username
-        $mail->Password   = 'ma.i1LAWs(';          // SMTP password
-        $mail->SMTPSecure = 'tls';                 // Enable TLS encryption
-        $mail->Port       = 587;                   // Use port 587 with TLS
+        // Configuración del servidor SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.titan.email'; // Servidor SMTP de Titan
+        $mail->SMTPAuth = true;
+        $mail->Username = 'contacto@juridicasa.com'; // Tu correo de remitente
+        $mail->Password = 'ma.i1LAWs('; // Tu contraseña
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Cifrado TLS
+        $mail->Port = 587; // Puerto para TLS
 
-        // Recipients
-        $mail->setFrom('contaco@juridicasa.com', 'JuridiCasa');
-        $mail->addAddress($email, $fullName);      // Use the email and name from the form
-        $mail->addBCC('legalrentmx.com@gmail.com');  // Blind carbon copy to the admin email
+        // **1. Enviar correo al administrador**
+        $mail->setFrom('contacto@juridicasa.com', 'Landing Juridicasa'); // Remitente (tu correo)
+        $mail->addAddress('contacto@juridicasa.com', 'Administrador'); // El destinatario principal (tú)
+        $mail->addReplyTo($email, $fullName); // Para responder al usuario
 
-        // Content
-        $mail->isHTML(true);                                    // Set email format to HTML
-        $mail->Subject = 'Gracias por contactarnos - JuridiCasa';
+        // Contenido del correo al administrador
+        $mail->isHTML(true);
+        $mail->Subject = 'Nuevo mensaje de contacto desde la landing page';
+        $mail->Body = "<h1>Nuevo mensaje recibido</h1>
+                       <p><strong>Nombre:</strong> {$fullName}</p>
+                       <p><strong>Email:</strong> {$email}</p>
+                       <p><strong>Teléfono:</strong> {$phone}</p>
+                       <p><strong>Mensaje:</strong><br>{$message}</p>";
+        $mail->AltBody = "Nuevo mensaje recibido\n\nNombre: {$fullName}\nEmail: {$email}\nTeléfono: {$phone}\nMensaje: {$message}";
 
-        // HTML Content
-        $mail->Body = '
-        <table class="email-container" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6; color: #737171;">
-            <tr>
-                <td class="header" style="background-color: #214757; color: white; padding: 20px; text-align: center; font-size: 24px;">
-                    ¡Gracias por contactarnos!
-                </td>
-            </tr>
-            <tr>
-                <td class="body-content" style="padding: 20px; background-color: #f4f4f4;">
-                    <h2 style="margin-top: 0; color: #214757;">Estimado/a ' . htmlspecialchars($fullName) . ',</h2>
-                    <p>Gracias por ponerte en contacto con nosotros. En breve un agente se comunicará contigo para atender tu solicitud.</p>
-                    <p>A continuación, te confirmamos los datos que nos proporcionaste:</p>
-                    <ul style="list-style-type: none; padding-left: 0;">
-                        <li><strong>Nombre:</strong> ' . htmlspecialchars($fullName) . '</li>
-                        <li><strong>Email:</strong> ' . htmlspecialchars($email) . '</li>
-                        <li><strong>Teléfono:</strong> ' . htmlspecialchars($phone) . '</li>
-                        <li><strong>Mensaje:</strong> ' . htmlspecialchars($message) . '</li>
-                    </ul>
-                    <p>Si tienes alguna otra pregunta, no dudes en contactarnos.</p>
-                    <a href="https://www.tu-sitio-web.com" class="button" style="display: inline-block; padding: 10px 15px; font-size: 16px; color: white; background-color: #214757; text-align: center; text-decoration: none; margin: 10px 0; border-radius: 5px;">Visita nuestro sitio web</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="footer" style="background-color: #050707; color: white; text-align: center; padding: 10px; font-size: 12px;">
-                    &copy; ' . date('Y') . ' JuridiCasa. Todos los derechos reservados.
-                </td>
-            </tr>
-        </table>
-        ';
-
-        // Fallback content for non-HTML email clients
-        $mail->AltBody = 'Gracias por ponerte en contacto con nosotros. En breve un agente se comunicará contigo.';
-
-        // Send the email
+        // Enviar correo al administrador
         $mail->send();
-        echo 'El mensaje ha sido enviado';
+
+        // **2. Enviar confirmación al usuario**
+        $mail->clearAddresses(); // Limpiar los destinatarios actuales
+        $mail->addAddress($email, $fullName); // Destinatario: el usuario que completó el formulario
+        $mail->Subject = 'Confirmación: Hemos recibido tu mensaje';
+        $mail->Body = "<h1>Gracias por contactarnos</h1>
+                       <p>Hola, <strong>{$fullName}</strong>. Hemos recibido tu mensaje correctamente.</p>
+                       <p>Uno de nuestros representantes se pondrá en contacto contigo pronto.</p>
+                       <p><strong>Detalles de tu mensaje:</strong></p>
+                       <ul>
+                           <li><strong>Nombre:</strong> {$fullName}</li>
+                           <li><strong>Email:</strong> {$email}</li>
+                           <li><strong>Teléfono:</strong> {$phone}</li>
+                           <li><strong>Mensaje:</strong> {$message}</li>
+                       </ul>
+                       <p>Gracias por confiar en nosotros.</p>";
+        $mail->AltBody = "Gracias por contactarnos. Hemos recibido tu mensaje correctamente.\n\nDetalles de tu mensaje:\n
+                          Nombre: {$fullName}\n
+                          Email: {$email}\n
+                          Teléfono: {$phone}\n
+                          Mensaje: {$message}";
+
+        // Enviar correo de confirmación al usuario
+        $mail->send();
+
+        // Respuesta exitosa
+        $response['success'] = true;
+        $response['message'] = 'El mensaje fue enviado correctamente y se envió una confirmación al usuario.';
     } catch (Exception $e) {
-        echo "El mensaje no se pudo enviar. Error: {$mail->ErrorInfo}";
+        // Manejo de errores y logging
+        $response['message'] = "Error al enviar el correo: {$mail->ErrorInfo}";
+        error_log("Error en PHPMailer: {$mail->ErrorInfo}", 3, __DIR__ . '/logs/errors.log');
     }
 } else {
-    echo "No se recibieron datos del formulario.";
+    $response['message'] = 'Acceso no permitido.';
 }
+
+// Responder con JSON
+echo json_encode($response);
