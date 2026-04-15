@@ -127,6 +127,196 @@ nav {
   max-width: 860px;
 }
 
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px clamp(1.5rem, 6vw, 5rem) 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-left {
+  max-width: 760px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.7rem, 2.5vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.4rem;
+  color: var(--ink);
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.hero-body {
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  color: var(--ink2);
+  font-weight: 300;
+  max-width: 50ch;
+  line-height: 1.8;
+  margin-bottom: 2.4rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.9rem 1.9rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.hero-cta:hover { transform: translateY(-2px); opacity: 0.9; }
+
+.hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-loop-card {
+  width: min(100%, 380px);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(26,23,20,0.08);
+  border-radius: 28px;
+  padding: 1.4rem;
+  box-shadow: 0 20px 50px rgba(26,23,20,0.08);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-loop-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(200,169,110,0.16), transparent 35%);
+  pointer-events: none;
+}
+
+.loop-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.loop-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulseDot 1.8s infinite;
+}
+
+.loop-main {
+  position: relative;
+  z-index: 1;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loop-label {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+.loop-words {
+  position: relative;
+  min-height: 88px;
+}
+
+.loop-word {
+  position: absolute;
+  inset: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.loop-word.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loop-tags {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.2rem;
+}
+
+.loop-tags span {
+  font-size: 0.8rem;
+  color: var(--ink2);
+  background: var(--pale);
+  border: 1px solid rgba(26,23,20,0.06);
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.65; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding-top: 120px;
+    padding-bottom: 70px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .hero-right {
+    justify-content: flex-start;
+  }
+
+  .hero-loop-card {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.7rem, 5.5vw, 4.9rem);
@@ -668,20 +858,48 @@ footer p {
   </div>
 </nav>
 
+
 <section class="hero">
-  <div class="hero-label">Desarrollo Web · Sistemas · Datos</div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-label">Desarrollo Web · Sistemas · Datos</div>
 
-  <h1>Tu presencia web<br>puede hacer más<br><em>que solo verse bien.</em></h1>
+      <h1>Tu proyecto web, puede hacer más, <em>que solo verse bien.</em></h1>
 
-  <p class="hero-body">
-    Desarrollo sitios y soluciones web pensadas para dar claridad,
-    estructura y mejor operación. Desde una buena base web
-    pueden empezar mejores procesos, mejores datos y mejores decisiones.
-  </p>
 
-  <a href="#story" class="hero-cta">
-    Ver enfoque <span>→</span>
-  </a>
+
+      <a href="#story" class="hero-cta">
+        Ver enfoque <span>→</span>
+      </a>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-loop-card">
+        <div class="loop-top">
+          <span class="loop-dot"></span>
+          <span>Estrategia Digital</span>
+        </div>
+
+        <div class="loop-main">
+          <p class="loop-label">Construyendo:</p>
+          <div class="loop-words">
+            <span class="loop-word active">Desarrollo web</span>
+            <span class="loop-word">Integraciones y APIs</span>
+            <span class="loop-word">Dashboards y datos</span>
+            <span class="loop-word">Automatización operativa</span>
+            <span class="loop-word">Mejora continua</span>
+          </div>
+        </div>
+
+        <div class="loop-tags">
+          <span>Web</span>
+          <span>Sistemas</span>
+          <span>Datos</span>
+          <span>Operación</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="story-problem" id="story">
@@ -775,7 +993,7 @@ footer p {
       </p>
 
       <p>
-        <strong>Mi enfoque es simple:</strong> crear soluciones web que no solo se vean bien,
+        <strong>Mi enfoque es simple:</strong> crear soluciones en sistemas que no solo se vean bien,
         sino que sirvan para comunicar, organizar y preparar el siguiente paso digital del negocio.
       </p>
     </div>
@@ -976,10 +1194,10 @@ footer p {
 <section class="cta-final" id="contacto">
   <div class="act">Contacto</div>
 
-  <h2>Todo puede empezar con una mejor <em>base web.</em></h2>
+  <h2>Todo puede empezar con una <em>reunión.</em></h2>
 
   <p>
-    Hablemos de tu sitio, tu proceso o tu siguiente paso digital.
+    Hablemos de tu proyecto, tu proceso o tu siguiente paso digital.
   </p>
 
   <div class="cta-buttons">
@@ -991,7 +1209,6 @@ footer p {
 <footer>
   <p>© 2026 Alexis Ortega</p>
   <ul class="footer-links">
-    <li><a href="#">LinkedIn</a></li>
    <li><a href="https://github.com/alexisortega236" target="_blank" rel="noopener noreferrer">GitHub</a></li>
   </ul>
 </footer>
@@ -1021,6 +1238,19 @@ document.querySelectorAll('.approach-item').forEach((el, i) => {
 document.querySelectorAll('.service-card').forEach((el, i) => {
   el.style.transitionDelay = `${i * 0.08}s`;
 });
+</script>
+
+<script>
+const loopWords = document.querySelectorAll('.loop-word');
+let loopIndex = 0;
+
+if (loopWords.length > 0) {
+  setInterval(() => {
+    loopWords[loopIndex].classList.remove('active');
+    loopIndex = (loopIndex + 1) % loopWords.length;
+    loopWords[loopIndex].classList.add('active');
+  }, 2200);
+}
 </script>
 
 </body>
