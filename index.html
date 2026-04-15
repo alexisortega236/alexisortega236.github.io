@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexis Ortega — Desarrollo Web, Sistemas y Operación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #1a1714;
+  --ink2: #3d3830;
+  --muted: #8a8278;
+  --pale: #f5f2ed;
+  --paper: #faf8f5;
+  --white: #ffffff;
+  --accent: #c8a96e;
+  --accent-light: #f0e8d8;
+  --line: rgba(26,23,20,0.1);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+  height: 68px;
+  background: rgba(250,248,245,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.nav-right a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.nav-right a:hover { color: var(--ink); }
+
+.nav-btn {
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s !important;
+}
+.nav-btn:hover { opacity: 0.85 !important; }
+
+/* WRAPPERS */
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+}
+
+.container-wide {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+}
+
+/* SHARED LABELS */
+.hero-label,
+.act {
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-label::before,
+.act::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px clamp(1.5rem, 6vw, 5rem) 80px;
+  max-width: 860px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.7rem, 5.5vw, 4.9rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.4rem;
+  color: var(--ink);
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.hero-body {
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  color: var(--ink2);
+  font-weight: 300;
+  max-width: 50ch;
+  line-height: 1.8;
+  margin-bottom: 2.4rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.9rem 1.9rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.hero-cta:hover { transform: translateY(-2px); opacity: 0.9; }
+
+/* PROBLEM */
+.story-problem {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 110px clamp(1.5rem, 6vw, 5rem);
+}
+
+.story-problem h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.3rem;
+}
+
+.story-problem p {
+  font-size: 1.02rem;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0.78;
+  max-width: 54ch;
+  margin-bottom: 1rem;
+}
+
+.pain-list {
+  margin-top: 2.3rem;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.pain-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.pain-item.visible { opacity: 1; transform: none; }
+
+.pain-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  min-width: 28px;
+  padding-top: 2px;
+}
+
+.pain-text {
+  font-size: 0.98rem;
+  font-weight: 300;
+  opacity: 0.82;
+  line-height: 1.6;
+}
+
+/* TURN */
+.story-turn {
+  padding: 120px clamp(1.5rem, 6vw, 5rem);
+  background: var(--paper);
+}
+
+.turn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.2rem;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .turn-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.turn-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.turn-left p {
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  max-width: 46ch;
+}
+
+.turn-right {
+  padding-top: 0.6rem;
+}
+
+.approach-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.7rem;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.approach-item.visible { opacity: 1; transform: none; }
+
+.approach-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.approach-content h4 {
+  font-weight: 500;
+  font-size: 0.98rem;
+  margin-bottom: 0.25rem;
+  color: var(--ink);
+}
+
+.approach-content p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+/* PARTNER */
+.story-partner {
+  background: var(--accent-light);
+  padding: 110px clamp(1.5rem, 6vw, 5rem);
+  border-top: 1px solid rgba(200,169,110,0.25);
+  border-bottom: 1px solid rgba(200,169,110,0.25);
+}
+
+.partner-inner {
+  max-width: 720px;
+}
+
+.partner-inner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+.partner-inner p {
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: var(--ink2);
+  line-height: 1.8;
+  margin-bottom: 0.95rem;
+  max-width: 52ch;
+}
+
+.partner-inner strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* SERVICES */
+.services {
+  padding: 110px clamp(1.5rem, 6vw, 5rem);
+  background: var(--paper);
+}
+
+.services-header {
+  max-width: 680px;
+  margin-bottom: 3.5rem;
+}
+
+.services-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+}
+
+.services-header p {
+  color: var(--muted);
+  font-weight: 300;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  max-width: 58ch;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+
+@media (max-width: 760px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 1.5rem 1.4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.2s ease;
+}
+
+.service-card.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.service-card:hover {
+  border-color: rgba(200,169,110,0.45);
+}
+
+.service-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+
+.service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.7rem;
+  color: var(--ink);
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+}
+
+.service-list li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.service-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 0.58rem;
+}
+
+/* CASES */
+.cases {
+  padding: 110px clamp(1.5rem, 6vw, 5rem);
+  background: var(--paper);
+}
+
+.cases-header {
+  max-width: 620px;
+  margin-bottom: 4rem;
+}
+
+.cases-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+  margin-bottom: 0.8rem;
+}
+
+.cases-header p {
+  color: var(--muted);
+  font-weight: 300;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.case-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.case-item.visible { opacity: 1; transform: none; }
+.case-item:last-child { border-bottom: 1px solid var(--line); }
+
+@media (max-width: 680px) {
+  .case-item { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+.case-type {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.45rem;
+}
+.case-industry {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.case-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.65rem;
+  color: var(--ink);
+}
+
+.case-body p {
+  font-size: 0.95rem;
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+  max-width: 52ch;
+}
+
+.case-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--pale);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+.case-result::before { content: '→'; color: var(--accent); }
+
+/* CTA FINAL */
+.cta-final {
+  background: var(--ink);
+  padding: 145px clamp(1.5rem, 6vw, 5rem);
+  text-align: center;
+}
+
+.cta-final .act {
+  justify-content: center;
+}
+.cta-final .act::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.cta-final h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  max-width: 14ch;
+  margin: 0 auto 1.2rem;
+}
+
+.cta-final h2 em {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.cta-final p {
+  color: rgba(250,248,245,0.58);
+  font-weight: 300;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-light,
+.btn-outline {
+  padding: 0.9rem 2rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.btn-light {
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 500;
+}
+.btn-light:hover { opacity: 0.88; transform: translateY(-2px); }
+
+.btn-outline {
+  background: transparent;
+  color: rgba(250,248,245,0.7);
+  border: 1px solid rgba(250,248,245,0.2);
+}
+.btn-outline:hover {
+  color: var(--paper);
+  border-color: rgba(250,248,245,0.5);
+}
+
+/* FOOTER */
+footer {
+  background: var(--ink);
+  padding: 2rem clamp(1.5rem, 6vw, 5rem);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: rgba(250,248,245,0.3);
+  font-weight: 300;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 0.8rem;
+  color: rgba(250,248,245,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: rgba(250,248,245,0.75); }
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (max-width: 600px) {
+  .nav-right a:not(.nav-btn) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Alexis Ortega</a>
+  <div class="nav-right">
+    <a href="#servicios">Servicios</a>
+    <a href="#casos">Casos</a>
+    <a href="#contacto" class="nav-btn">Contacto</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Desarrollo Web · Sistemas · Datos</div>
+
+  <h1>Tu presencia web<br>puede hacer más<br><em>que solo verse bien.</em></h1>
+
+  <p class="hero-body">
+    Desarrollo sitios y soluciones web pensadas para dar claridad,
+    estructura y mejor operación. Desde una buena base web
+    pueden empezar mejores procesos, mejores datos y mejores decisiones.
+  </p>
+
+  <a href="#story" class="hero-cta">
+    Ver enfoque <span>→</span>
+  </a>
+</section>
+
+<section class="story-problem" id="story">
+  <div class="container">
+    <div class="act">El problema</div>
+
+    <h2>Web sin dirección.</h2>
+
+    <p>
+      Muchas veces un negocio ya tiene página, sistema o presencia digital,
+      pero nada de eso está realmente conectado con su operación.
+    </p>
+
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="pain-num">01</span>
+        <span class="pain-text">Sitios que informan, pero no ayudan a convertir ni a ordenar procesos.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">02</span>
+        <span class="pain-text">Información repartida entre formularios, hojas y seguimiento manual.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">03</span>
+        <span class="pain-text">Procesos web que se ven bien, pero no resuelven lo importante.</span>
+      </div>
+      <div class="pain-item">
+        <span class="pain-num">04</span>
+        <span class="pain-text">Herramientas digitales que crecieron sin estructura clara.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story-turn">
+  <div class="container-wide">
+    <div class="turn-grid">
+      <div class="turn-left reveal">
+        <div class="act">El enfoque</div>
+        <h2>Empezar bien.</h2>
+
+        <p>
+          Para mí, desarrollo web no es solo diseño ni código.
+          Es construir una base útil: clara para el usuario y útil para el negocio.
+        </p>
+
+        <p>
+          Desde ahí se puede crecer con más orden:
+          automatización, integraciones, dashboards o sistemas internos.
+        </p>
+      </div>
+
+      <div class="turn-right">
+        <div class="approach-item">
+          <div class="approach-dot"></div>
+          <div class="approach-content">
+            <h4>Base sólida</h4>
+            <p>Web pensada para crecer, no solo para publicar.</p>
+          </div>
+        </div>
+
+        <div class="approach-item">
+          <div class="approach-dot"></div>
+          <div class="approach-content">
+            <h4>Visión completa</h4>
+            <p>Sitio, proceso, datos y operación en la misma conversación.</p>
+          </div>
+        </div>
+
+        <div class="approach-item">
+          <div class="approach-dot"></div>
+          <div class="approach-content">
+            <h4>Mejora real</h4>
+            <p>Más claridad, menos fricción y mejor ejecución digital.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story-partner">
+  <div class="container">
+    <div class="partner-inner reveal">
+      <div class="act">Lo que hago</div>
+      <h2>Web con propósito.</h2>
+
+      <p>
+        Trabajo con desarrollo web como punto de partida
+        para construir experiencias más útiles y operaciones más ordenadas.
+      </p>
+
+      <p>
+        <strong>Mi enfoque es simple:</strong> crear soluciones web que no solo se vean bien,
+        sino que sirvan para comunicar, organizar y preparar el siguiente paso digital del negocio.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="servicios">
+  <div class="container-wide">
+    <div class="services-header reveal">
+      <div class="act">Servicios</div>
+      <h2>Rubros donde puedo aportar valor.</h2>
+      <p>
+        Desde desarrollo web hasta datos, integraciones y mejora operativa.
+        La idea no es sumar tecnología por sumar, sino usarla para dar orden,
+        claridad y mejor capacidad de ejecución.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-eyebrow">01</div>
+        <h3>Desarrollo web</h3>
+        <p>
+          Sitios, landings y soluciones web pensadas no solo para verse bien,
+          sino para comunicar mejor, ordenar procesos y servir como base de crecimiento digital.
+        </p>
+        <ul class="service-list">
+          <li>Landing pages y sitios corporativos</li>
+          <li>Flujos web orientados a conversión</li>
+          <li>Mejora de estructura y experiencia</li>
+          <li>Base digital lista para evolucionar</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">02</div>
+        <h3>Sistemas internos</h3>
+        <p>
+          Desarrollo y mejora de herramientas que ayudan a operar mejor por dentro:
+          paneles, módulos internos, flujos administrativos y plataformas de apoyo operativo.
+        </p>
+        <ul class="service-list">
+          <li>Backoffices y paneles administrativos</li>
+          <li>Herramientas para operación interna</li>
+          <li>Mejora de módulos existentes</li>
+          <li>Orden y claridad en procesos digitales</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">03</div>
+        <h3>Integraciones y APIs</h3>
+        <p>
+          Conexión entre sistemas, servicios y fuentes de información para reducir trabajo manual,
+          evitar duplicidad y lograr que la operación fluya mejor.
+        </p>
+        <ul class="service-list">
+          <li>Integración entre plataformas</li>
+          <li>Consumo y conexión de APIs</li>
+          <li>Automatización de flujos de datos</li>
+          <li>Menos fricción entre herramientas</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">04</div>
+        <h3>Datos y analítica</h3>
+        <p>
+          Transformación de datos dispersos en información útil para entender mejor el negocio,
+          visualizar la operación y tomar decisiones con más contexto.
+        </p>
+        <ul class="service-list">
+          <li>Dashboards y tableros de seguimiento</li>
+          <li>Integración de fuentes de datos</li>
+          <li>Visibilidad operativa y comercial</li>
+          <li>Analítica aplicada al negocio</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">05</div>
+        <h3>Automatización operativa</h3>
+        <p>
+          Mejora de procesos digitales para depender menos de tareas manuales,
+          dar seguimiento más claro y reducir retrabajo en la operación diaria.
+        </p>
+        <ul class="service-list">
+          <li>Flujos repetitivos más eficientes</li>
+          <li>Reducción de pasos manuales</li>
+          <li>Mejor continuidad de operación</li>
+          <li>Procesos más claros y medibles</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">06</div>
+        <h3>Infraestructura y continuidad</h3>
+        <p>
+          Revisión y mejora de bases técnicas para que los sistemas tengan mejor estabilidad,
+          continuidad y capacidad de evolucionar sin romper lo que ya funciona.
+        </p>
+        <ul class="service-list">
+          <li>Apoyo en migraciones técnicas</li>
+          <li>Revisión de servicios y despliegues</li>
+          <li>Continuidad operativa digital</li>
+          <li>Mejor base para crecer</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">07</div>
+        <h3>Innovación digital</h3>
+        <p>
+          Exploración y aterrizaje de nuevas formas de mejorar la operación con tecnología,
+          siempre con enfoque práctico y cuidando que la solución tenga sentido real para el negocio.
+        </p>
+        <ul class="service-list">
+          <li>Nuevas ideas con aplicación real</li>
+          <li>Mejora de experiencia digital</li>
+          <li>Soluciones escalables</li>
+          <li>Innovación con criterio</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-eyebrow">08</div>
+        <h3>Estrategia digital</h3>
+        <p>
+          Acompañamiento para entender por dónde empezar, qué vale la pena construir
+          y cómo conectar mejor tecnología, operación y objetivos del negocio.
+        </p>
+        <ul class="service-list">
+          <li>Detección de cuellos de botella</li>
+          <li>Priorización de iniciativas</li>
+          <li>Definición de ruta digital</li>
+          <li>Tecnología alineada al negocio</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cases" id="casos">
+  <div class="container-wide">
+    <div class="cases-header reveal">
+      <div class="act">Casos</div>
+      <h2>Resultados visibles.</h2>
+      <p>Ejemplos del tipo de trabajo con el que suelo aportar valor.</p>
+    </div>
+
+    <div class="case-item">
+      <div class="case-meta">
+        <div class="case-type">Desarrollo Web</div>
+        <div class="case-industry">Presencia Digital</div>
+      </div>
+      <div class="case-body">
+        <h3>Mejor estructura</h3>
+        <p>
+          Sitios y flujos web pensados para comunicar mejor,
+          ordenar la interacción y dejar una base lista para crecer.
+        </p>
+        <span class="case-result">Más claridad digital</span>
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-meta">
+        <div class="case-type">Datos</div>
+        <div class="case-industry">BI / Dashboards</div>
+      </div>
+      <div class="case-body">
+        <h3>Más visibilidad</h3>
+        <p>
+          Integración de información dispersa para convertir datos sueltos
+          en contexto útil para entender mejor la operación.
+        </p>
+        <span class="case-result">Decisiones mejor informadas</span>
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-meta">
+        <div class="case-type">Sistemas</div>
+        <div class="case-industry">Operación / Mejora</div>
+      </div>
+      <div class="case-body">
+        <h3>Menos fricción</h3>
+        <p>
+          Ajustes, conexiones y mejoras que ayudan a que la parte digital
+          acompañe mejor al negocio en lugar de frenarlo.
+        </p>
+        <span class="case-result">Mejor continuidad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" id="contacto">
+  <div class="act">Contacto</div>
+
+  <h2>Todo puede empezar con una mejor <em>base web.</em></h2>
+
+  <p>
+    Hablemos de tu sitio, tu proceso o tu siguiente paso digital.
+  </p>
+
+  <div class="cta-buttons">
+    <a href="mailto:alexisortega236@gmail.com" class="btn-light">Escríbeme →</a>
+    <a href="https://wa.me/5665844559" class="btn-outline">WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Alexis Ortega</p>
+  <ul class="footer-links">
+    <li><a href="#">LinkedIn</a></li>
+   <li><a href="https://github.com/alexisortega236" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+  </ul>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .pain-item, .approach-item, .case-item, .service-card').forEach(el => {
+  observer.observe(el);
+});
+
+document.querySelectorAll('.pain-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.12}s`;
+});
+
+document.querySelectorAll('.approach-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.1}s`;
+});
+
+document.querySelectorAll('.service-card').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.08}s`;
+});
+</script>
+
+</body>
+</html>
